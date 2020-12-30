@@ -9,3 +9,13 @@ export const getUrlParams = () => {
     return acc;
   }, {});
 };
+
+export const generateToken = (length) => {
+  const chars = "abcdefghijklmnopqrstuvwxyz1234567890";
+  let token = "";
+  while (token.length < length) {
+    let randomIndex = Math.floor(Math.random() * chars.length);
+    token += chars[randomIndex];
+  }
+  return token;
+};
