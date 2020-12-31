@@ -7,20 +7,22 @@ import { getUserData } from "../services/user";
 const Signin = ({ setUser }) => {
   const history = useHistory();
   const params = getUrlParams();
-  const { state } = storage.loadUser(); // handle case if no user is loaded -- user will be null
+  const { state } = storage.loadUser();
 
   // Set user and redirect
   useEffect(() => {
     const setupUserData = async ({ access_token, token_type, expires_in }) => {
       try {
         const userData = await getUserData(access_token);
-        setUser({
+        const user = {
           isAuthenticated: true,
           username: userData.name,
           accessToken: access_token,
           tokenType: token_type,
           expires: Date.now() + expires_in * 1000, // may need to set this when sending initial request
-        });
+        };
+        setUser(user);
+        storage.saveUser(user);
         history.push("/");
       } catch (err) {
         console.error(err);
