@@ -14,7 +14,7 @@ const App = () => {
           <Signin setUser={setUser} />
         </Route>
         <Route path="/">
-          <Main />
+          <Main user={user} />
         </Route>
       </Switch>
     </Router>
