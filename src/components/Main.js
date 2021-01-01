@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { authenticateUser } from "../services/auth";
 import { getAllUserSavedPosts } from "../services/user";
 import storage from "../utils/storage";
+import Card from "./Card";
 
 const Main = ({ user, posts, setPosts }) => {
   useEffect(() => {
@@ -22,9 +23,12 @@ const Main = ({ user, posts, setPosts }) => {
   }
 
   return posts.length ? (
-    posts.map((post) => (
-      <div dangerouslySetInnerHTML={{ __html: post.title }}></div>
-    ))
+    <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
+      <h1 className="text-4xl font-extrabold">Saved Posts</h1>
+      {posts.map((post) => (
+        <Card post={post} />
+      ))}
+    </div>
   ) : (
     <p>No saved posts!</p>
   );
