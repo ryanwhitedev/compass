@@ -5,6 +5,7 @@ import reducers from "./utils/reducers";
 const storeReducers = combineReducers({
   user: reducers.userReducer,
   posts: reducers.postReducer,
+  index: reducers.indexReducer,
   search: reducers.searchReducer,
 });
 

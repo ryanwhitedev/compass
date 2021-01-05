@@ -1,5 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import lunr from "lunr";
-import { useEffect, useState } from "react";
+import { setIndex } from "../utils/actionCreators";
 
 const SEARCH_FIELDS = ["title", "body", "subreddit"];
 
@@ -31,29 +33,29 @@ const formatPosts = (posts) => {
   }, {});
 };
 
-const useSearch = (initialPosts = []) => {
-  const [posts, setPosts] = useState(formatPosts(initialPosts));
-  const [index, setIndex] = useState(buildIndex(posts));
+const search = (searchStr, index, posts) => {
+  if (!searchStr || !index) return [];
+
+  const query = buildQueryString(searchStr);
+  const results = index.search(query);
+  return results.map((result) => formatPosts(posts)[result.ref]);
+};
+
+const useSearch = () => {
+  const dispatch = useDispatch();
+  const index = useSelector((state) => state.index);
+  const posts = useSelector((state) => state.posts);
+
+  // Initialize index the first time useSearch is called
+  if (!index) {
+    dispatch(setIndex(buildIndex(posts)));
+  }
 
   useEffect(() => {
-    setIndex(buildIndex(posts));
-  }, [posts]);
+    dispatch(setIndex(buildIndex(posts)));
+  }, [posts, dispatch]);
 
-  const search = (searchStr) => {
-    if (!searchStr || !index) return [];
-
-    const query = buildQueryString(searchStr);
-    const results = index.search(query);
-    return results.map((result) => posts[result.ref]);
-  };
-
-  // should be called inside `useEffect`
-  const updateIndex = (posts) => {
-    if (!Array.isArray(posts)) return null; // should throw error
-    setPosts(formatPosts(posts));
-  };
-
-  return [search, updateIndex];
+  return (searchStr) => search(searchStr, index, posts);
 };
 
 export default useSearch;

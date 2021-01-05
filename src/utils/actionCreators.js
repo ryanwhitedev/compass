@@ -12,6 +12,13 @@ export const setPosts = (posts) => ({
 
 export const clearPosts = () => ({ type: "CLEAR_POSTS" });
 
+export const setIndex = (index) => ({
+  type: "SET_INDEX",
+  data: { index },
+});
+
+export const clearIndex = () => ({ type: "CLEAR_INDEX" });
+
 export const setSearch = (search) => ({
   type: "SEARCH",
   data: { search },

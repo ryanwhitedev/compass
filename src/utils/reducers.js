@@ -20,6 +20,17 @@ const postReducer = (state = [], action) => {
   }
 };
 
+const indexReducer = (state = null, action) => {
+  switch (action.type) {
+    case "SET_INDEX":
+      return action.data.index;
+    case "CLEAR_INDEX":
+      return null;
+    default:
+      return state;
+  }
+};
+
 const searchReducer = (state = null, action) => {
   switch (action.type) {
     case "SEARCH":
@@ -31,5 +42,5 @@ const searchReducer = (state = null, action) => {
   }
 };
 
-const reducers = { userReducer, postReducer, searchReducer };
+const reducers = { userReducer, postReducer, indexReducer, searchReducer };
 export default reducers;
