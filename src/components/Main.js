@@ -33,14 +33,14 @@ const Main = () => {
 
   useEffect(() => {
     const getAndSetPosts = async () => {
-      const posts = await getAllUserSavedPosts(user);
-      console.log("main (inside useEffect):", posts);
+      const userPosts = await getAllUserSavedPosts(user);
+      console.log("main (inside useEffect):", userPosts);
 
-      dispatch(setPosts(posts));
-      storage.savePosts(posts);
+      dispatch(setPosts(userPosts));
+      storage.savePosts(userPosts);
 
       setLoading(false);
-      setDisplayedPosts(posts.slice(0, POST_INTERVAL));
+      setDisplayedPosts(userPosts.slice(0, POST_INTERVAL));
     };
 
     if (user && !posts.length) {
@@ -49,7 +49,11 @@ const Main = () => {
     } else if (posts.length) {
       setDisplayedPosts(posts.slice(0, POST_INTERVAL));
     }
-  }, [user, posts, dispatch]);
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    setDisplayedPosts(posts.slice(0, POST_INTERVAL));
+  }, [posts]);
 
   if (!user || !user.isAuthenticated) {
     return <button onClick={() => authenticateUser()}>auth</button>;
