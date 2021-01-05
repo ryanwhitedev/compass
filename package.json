@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "autoprefixer": "^9",
     "dompurify": "^2.2.6",
+    "lunr": "^2.3.9",
     "marked": "^1.2.7",
     "postcss": "^7",
     "react": "^17.0.1",
