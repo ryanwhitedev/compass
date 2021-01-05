@@ -4,14 +4,21 @@ import { getAllUserSavedPosts } from "../services/user";
 import storage from "../utils/storage";
 import Nav from "./Nav";
 import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../utils/actionCreators";
 
 const POST_INTERVAL = 10;
 
-const Main = ({ user, posts, setPosts }) => {
-  const [displayedPosts, setDisplayedPosts] = useState([]);
+const Main = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const posts = useSelector((state) => state.posts);
+  const [displayedPosts, setDisplayedPosts] = useState(
+    posts.slice(0, POST_INTERVAL)
+  );
   const [loading, setLoading] = useState(false);
 
-  const loadMorePosts = () => {
+  const showMorePosts = () => {
     const numPosts = displayedPosts.length + POST_INTERVAL;
     const postsToDisplay = posts.slice(0, numPosts);
     setDisplayedPosts(postsToDisplay);
@@ -22,19 +29,20 @@ const Main = ({ user, posts, setPosts }) => {
       const posts = await getAllUserSavedPosts(user);
       console.log("main:", posts);
 
-      setPosts(posts);
+      dispatch(setPosts(posts));
       storage.savePosts(posts);
 
       setLoading(false);
       setDisplayedPosts(posts.slice(0, POST_INTERVAL));
     };
+
     if (user && !posts.length) {
       getAndSetPosts();
       setLoading(true);
     } else if (posts.length) {
       setDisplayedPosts(posts.slice(0, POST_INTERVAL));
     }
-  }, [user, posts, setPosts]);
+  }, [user, posts, dispatch]);
 
   if (!user || !user.isAuthenticated) {
     return <button onClick={() => authenticateUser()}>auth</button>;
@@ -45,7 +53,7 @@ const Main = ({ user, posts, setPosts }) => {
 
   return (
     <>
-      <Nav user={user} />
+      <Nav />
       <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
         {displayedPosts.length ? (
           <>
@@ -56,7 +64,7 @@ const Main = ({ user, posts, setPosts }) => {
             {displayedPosts.length < posts.length ? (
               <button
                 className="block py-2 px-4 bg-orange hover:bg-orange-light text-white font-bold rounded mx-auto"
-                onClick={loadMorePosts}
+                onClick={showMorePosts}
               >
                 Load More
               </button>

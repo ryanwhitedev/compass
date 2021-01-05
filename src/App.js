@@ -1,25 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import storage from "./utils/storage";
 import Signin from "./components/Signin";
 import Main from "./components/Main";
+import { useDispatch } from "react-redux";
+import { setUser, setPosts } from "./utils/actionCreators";
 
 const App = () => {
-  const [user, setUser] = useState(storage.loadUser());
-  const [posts, setPosts] = useState(storage.loadPosts());
+  const dispatch = useDispatch();
 
-  console.log("user:", user);
-  console.log("posts:", posts);
+  // Setup user and posts if they exist in localStorage
+  useEffect(() => {
+    const storedUser = storage.loadUser();
+    if (storedUser) {
+      dispatch(setUser(storedUser));
+    }
+
+    const storedPosts = storage.loadPosts();
+    if (storedPosts) {
+      dispatch(setPosts(storedPosts));
+    }
+  }, [dispatch]);
 
   return (
     <Router>
       <Switch>
         <Route path="/signin">
-          <Signin setUser={setUser} />
+          <Signin />
         </Route>
         <Route path="/">
-          <Main user={user} posts={posts} setPosts={setPosts} />
+          <Main />
         </Route>
       </Switch>
     </Router>

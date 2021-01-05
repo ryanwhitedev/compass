@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-const Nav = ({ user }) => {
-  const [search, setSearch] = useState("");
+const Nav = () => {
+  const user = useSelector((state) => state.user);
+  const [query, setQuery] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(search);
+    console.log(query);
   };
 
   return (
@@ -19,8 +21,8 @@ const Nav = ({ user }) => {
           <input
             type="text"
             className="py-1 px-1.5 mr-2 border border-gray-300 rounded"
-            value={search}
-            onChange={({ target }) => setSearch(target.value)}
+            value={query}
+            onChange={({ target }) => setQuery(target.value)}
           />
           <button
             className="py-1 px-4 bg-orange border border-orange hover:bg-orange-light text-white font-bold rounded"
