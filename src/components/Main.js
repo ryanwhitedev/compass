@@ -12,7 +12,12 @@ const POST_INTERVAL = 10;
 const Main = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const posts = useSelector((state) => state.posts);
+  const posts = useSelector((state) => {
+    if (state.search) {
+      return state.search.results;
+    }
+    return state.posts;
+  });
   const [displayedPosts, setDisplayedPosts] = useState(
     posts.slice(0, POST_INTERVAL)
   );
@@ -24,10 +29,12 @@ const Main = () => {
     setDisplayedPosts(postsToDisplay);
   };
 
+  console.log("main:", posts);
+
   useEffect(() => {
     const getAndSetPosts = async () => {
       const posts = await getAllUserSavedPosts(user);
-      console.log("main:", posts);
+      console.log("main (inside useEffect):", posts);
 
       dispatch(setPosts(posts));
       storage.savePosts(posts);

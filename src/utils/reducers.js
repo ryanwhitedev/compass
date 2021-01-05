@@ -20,5 +20,16 @@ const postReducer = (state = [], action) => {
   }
 };
 
-const reducers = { userReducer, postReducer };
+const searchReducer = (state = null, action) => {
+  switch (action.type) {
+    case "SEARCH":
+      return action.data.search;
+    case "CLEAR_SEARCH":
+      return null;
+    default:
+      return state;
+  }
+};
+
+const reducers = { userReducer, postReducer, searchReducer };
 export default reducers;

@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import useSearch from "../hooks/useSearch";
+import { setSearch, clearSearch } from "../utils/actionCreators";
 
 const Nav = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const posts = useSelector((state) => state.posts);
+  const [search] = useSearch(posts);
   const [query, setQuery] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(query);
+
+    const results = search(query);
+    if (!query) {
+      dispatch(clearSearch());
+    } else {
+      dispatch(setSearch({ query, results }));
+    }
   };
 
   return (

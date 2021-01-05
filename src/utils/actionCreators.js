@@ -11,3 +11,10 @@ export const setPosts = (posts) => ({
 });
 
 export const clearPosts = () => ({ type: "CLEAR_POSTS" });
+
+export const setSearch = (search) => ({
+  type: "SEARCH",
+  data: { search },
+});
+
+export const clearSearch = () => ({ type: "CLEAR_SEARCH" });
