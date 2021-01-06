@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { authenticateUser } from "../services/auth";
 import { getAllUserSavedPosts } from "../services/user";
 import storage from "../utils/storage";
-import Nav from "./Nav";
+import NavBar from "./NavBar";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../utils/actionCreators";
@@ -64,7 +64,7 @@ const Main = () => {
 
   return (
     <>
-      <Nav />
+      <NavBar />
       <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
         {displayedPosts.length ? (
           <>
