@@ -1,5 +1,6 @@
 import { sanitize } from "dompurify";
 import marked from "marked";
+import storage from "../utils/storage";
 
 export const getUserData = async (token, tokenType = "bearer") => {
   const endpoint = "https://oauth.reddit.com/api/v1/me?raw_json=1";
@@ -38,22 +39,39 @@ const getSavedPosts = async ({
   return response.json();
 };
 
-export const getAllUserSavedPosts = async (user) => {
-  let currentPostId = null;
+export const getAllPosts = async (user) => {
   const savedPosts = [];
+  let afterPostId = null;
 
   do {
     const response = await getSavedPosts({
       user,
-      after: currentPostId,
+      after: afterPostId,
       count: savedPosts.length,
     });
     const posts = parseSavedPosts(response.data.children);
     savedPosts.push(...posts);
-    currentPostId = response.data.after;
-  } while (currentPostId);
+    afterPostId = response.data.after;
+  } while (afterPostId);
 
   return savedPosts;
+};
+
+export const getNewPosts = async (user) => {
+  let allPosts = storage.loadPosts();
+  let beforePostId = allPosts[0].id;
+  let postDist;
+
+  do {
+    const response = await getSavedPosts({ user, before: beforePostId });
+    console.log(response);
+    const newPosts = parseSavedPosts(response.data.children);
+    allPosts = newPosts.concat(allPosts);
+    beforePostId = allPosts[0].id;
+    postDist = response.dist;
+  } while (postDist >= 100);
+
+  return allPosts;
 };
 
 const parseSavedPosts = (posts) => {
