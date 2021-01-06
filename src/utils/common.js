@@ -10,12 +10,16 @@ export const getUrlParams = () => {
   }, {});
 };
 
-export const generateToken = (length) => {
+export const generateToken = (length, action) => {
   const chars = "abcdefghijklmnopqrstuvwxyz1234567890";
   let token = "";
   while (token.length < length) {
     let randomIndex = Math.floor(Math.random() * chars.length);
     token += chars[randomIndex];
   }
-  return token;
+  return `${token}__${action}`;
+};
+
+export const parseStateToken = (token) => {
+  return token.split("__")[1];
 };

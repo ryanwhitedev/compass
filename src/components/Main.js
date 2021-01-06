@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { authenticateUser } from "../services/auth";
-import { getAllUserSavedPosts } from "../services/user";
+import { authenticateUserWithAction } from "../services/auth";
+import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
 import NavBar from "./NavBar";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../utils/actionCreators";
+import { setAction, clearAction, setPosts } from "../utils/actionCreators";
 
 const POST_INTERVAL = 10;
 
 const Main = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const action = useSelector((state) => state.action);
   const posts = useSelector((state) => {
     if (state.search) {
       return state.search.results;
@@ -21,7 +22,8 @@ const Main = () => {
   const [displayedPosts, setDisplayedPosts] = useState(
     posts.slice(0, POST_INTERVAL)
   );
-  const [loading, setLoading] = useState(false);
+
+  console.log("main:", posts);
 
   const showMorePosts = () => {
     const numPosts = displayedPosts.length + POST_INTERVAL;
@@ -29,36 +31,38 @@ const Main = () => {
     setDisplayedPosts(postsToDisplay);
   };
 
-  console.log("main:", posts);
-
   useEffect(() => {
-    const getAndSetPosts = async () => {
-      const userPosts = await getAllUserSavedPosts(user);
-      console.log("main (inside useEffect):", userPosts);
-
-      dispatch(setPosts(userPosts));
-      storage.savePosts(userPosts);
-
-      setLoading(false);
-      setDisplayedPosts(userPosts.slice(0, POST_INTERVAL));
+    const getAndSetPosts = async (fetchPosts) => {
+      const posts = await fetchPosts(user);
+      dispatch(clearAction());
+      dispatch(setPosts(posts));
+      storage.savePosts(posts);
     };
 
-    if (user && !posts.length) {
-      getAndSetPosts();
-      setLoading(true);
-    } else if (posts.length) {
+    if (user && action === "getAllPosts") {
+      dispatch(setAction("loading"));
+      getAndSetPosts(getAllPosts);
+    } else if (user && action === "getNewPosts") {
+      dispatch(setAction("loading"));
+      getAndSetPosts(getNewPosts);
+    } else if (user && posts.length) {
       setDisplayedPosts(posts.slice(0, POST_INTERVAL));
     }
-  }, [user, dispatch]);
+  }, [user, action, posts, dispatch]);
 
   useEffect(() => {
     setDisplayedPosts(posts.slice(0, POST_INTERVAL));
   }, [posts]);
 
   if (!user || !user.isAuthenticated) {
-    return <button onClick={() => authenticateUser()}>auth</button>;
+    return (
+      <button onClick={() => authenticateUserWithAction("getAllPosts")}>
+        auth
+      </button>
+    );
   }
-  if (loading) {
+
+  if (action === "loading") {
     return <div>loading...</div>;
   }
 

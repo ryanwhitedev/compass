@@ -1,11 +1,42 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import storage from "../utils/storage";
+import { setAction, clearUser, clearPosts } from "../utils/actionCreators";
+import { authenticateUserWithAction } from "../services/auth";
 
 const Menu = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
 
   const toggleVisibility = useCallback(() => setVisible(!visible), [visible]);
+  const logout = () => {
+    storage.clearUser();
+    dispatch(clearUser());
+    storage.clearPosts();
+    dispatch(clearPosts());
+  };
+
+  const reloadAllPosts = async () => {
+    if (user && user.tokenExpiry > Date.now()) {
+      dispatch(setAction("getAllPosts"));
+    } else {
+      storage.clearPosts();
+      storage.clearUser();
+      authenticateUserWithAction("getAllPosts");
+    }
+
+    toggleVisibility();
+  };
+
+  const getNewPosts = async () => {
+    if (user && user.tokenExpiry > Date.now()) {
+      dispatch(setAction("getNewPosts"));
+    } else {
+      storage.clearUser();
+      authenticateUserWithAction("getNewPosts");
+    }
+  };
 
   const navRef = useRef();
   useEffect(() => {
@@ -46,7 +77,7 @@ const Menu = () => {
             <li>
               <button
                 className="px-4 py-2 w-full hover:bg-gray-300"
-                onClick={toggleVisibility}
+                onClick={getNewPosts}
               >
                 Load New Posts
               </button>
@@ -54,7 +85,7 @@ const Menu = () => {
             <li>
               <button
                 className="px-4 py-2 w-full hover:bg-gray-300"
-                onClick={toggleVisibility}
+                onClick={reloadAllPosts}
               >
                 Reload All Posts
               </button>
@@ -62,7 +93,7 @@ const Menu = () => {
             <li>
               <button
                 className="px-4 py-2 w-full hover:bg-gray-300"
-                onClick={toggleVisibility}
+                onClick={logout}
               >
                 Logout
               </button>

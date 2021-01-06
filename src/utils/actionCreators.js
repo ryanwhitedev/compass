@@ -5,6 +5,13 @@ export const setUser = (user) => ({
 
 export const clearUser = () => ({ type: "CLEAR_USER" });
 
+export const setAction = (action) => ({
+  type: "SET_ACTION",
+  data: { action },
+});
+
+export const clearAction = () => ({ type: "CLEAR_ACTION" });
+
 export const setPosts = (posts) => ({
   type: "SET_POSTS",
   data: { posts },
