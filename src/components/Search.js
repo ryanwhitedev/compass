@@ -37,10 +37,10 @@ const Search = () => {
   };
 
   return (
-    <form className="sm:justify-self-end pt-2 sm:pt-0" onSubmit={handleSubmit}>
+    <form className="flex sm:justify-self-end" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="py-1 px-1.5 mr-2 border border-gray-300 rounded"
+        className="flex-grow py-1 px-1.5 mr-2 border border-gray-300 rounded"
         value={query}
         onChange={({ target }) => setQuery(target.value)}
       />

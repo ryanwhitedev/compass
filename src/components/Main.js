@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { authenticateUserWithAction } from "../services/auth";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
-import NavBar from "./NavBar";
+import Header from "./header/Header";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { setAction, clearAction, setPosts } from "../utils/actionCreators";
@@ -68,7 +68,7 @@ const Main = () => {
 
   return (
     <>
-      <NavBar />
+      <Header />
       <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
         {displayedPosts.length ? (
           <>
