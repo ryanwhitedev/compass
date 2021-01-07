@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { authenticateUserWithAction } from "../services/auth";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
+import Loading from "./Loading";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { setAction, clearAction, setPosts } from "../utils/actionCreators";
@@ -54,15 +55,11 @@ const Main = () => {
   }, [posts]);
 
   if (!user || !user.isAuthenticated) {
-    return (
-      <button onClick={() => authenticateUserWithAction("getAllPosts")}>
-        auth
-      </button>
-    );
+    return null;
   }
 
   if (action === "loading") {
-    return <div>loading...</div>;
+    return <Loading message="Loading Posts..." />;
   }
 
   return (

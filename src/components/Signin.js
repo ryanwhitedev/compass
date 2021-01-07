@@ -5,6 +5,7 @@ import storage from "../utils/storage";
 import { getUrlParams, parseStateToken } from "../utils/common";
 import { getUserData } from "../services/user";
 import { setUser, setAction } from "../utils/actionCreators";
+import Loading from "./Loading";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const Signin = () => {
     return <h1>state mismatch</h1>;
   }
 
-  return <h1>authenticating user...</h1>;
+  return <Loading />;
 };
 
 export default Signin;
