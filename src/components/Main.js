@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { authenticateUserWithAction } from "../services/auth";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
-import Header from "./header/Header";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { setAction, clearAction, setPosts } from "../utils/actionCreators";
@@ -67,29 +66,26 @@ const Main = () => {
   }
 
   return (
-    <>
-      <Header />
-      <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
-        {displayedPosts.length ? (
-          <>
-            <h1 className="text-4xl font-extrabold">Saved Posts</h1>
-            {displayedPosts.map((post) => (
-              <Card key={post.id} post={post} />
-            ))}
-            {displayedPosts.length < posts.length ? (
-              <button
-                className="block py-2 px-4 bg-orange hover:bg-orange-light text-white font-bold rounded mx-auto"
-                onClick={showMorePosts}
-              >
-                Load More
-              </button>
-            ) : null}
-          </>
-        ) : (
-          <p>No saved posts!</p>
-        )}
-      </div>
-    </>
+    <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
+      {displayedPosts.length ? (
+        <>
+          <h1 className="text-4xl font-extrabold">Saved Posts</h1>
+          {displayedPosts.map((post) => (
+            <Card key={post.id} post={post} />
+          ))}
+          {displayedPosts.length < posts.length ? (
+            <button
+              className="block py-2 px-4 bg-orange hover:bg-orange-light text-white font-bold rounded mx-auto"
+              onClick={showMorePosts}
+            >
+              Load More
+            </button>
+          ) : null}
+        </>
+      ) : (
+        <p>No saved posts!</p>
+      )}
+    </div>
   );
 };
 

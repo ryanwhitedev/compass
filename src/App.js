@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import storage from "./utils/storage";
 import Signin from "./components/Signin";
+import Header from "./components/header/Header";
 import Main from "./components/Main";
 import { useDispatch } from "react-redux";
 import { setUser, setPosts } from "./utils/actionCreators";
@@ -30,6 +31,7 @@ const App = () => {
           <Signin />
         </Route>
         <Route path="/">
+          <Header />
           <Main />
         </Route>
       </Switch>
