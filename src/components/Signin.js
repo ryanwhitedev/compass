@@ -1,20 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import storage from "../utils/storage";
 import { getUrlParams, parseStateToken } from "../utils/common";
 import { getUserData } from "../services/user";
-import { setUser, setAction } from "../utils/actionCreators";
+import { setUser, setAction, clearUser } from "../utils/actionCreators";
 import Loading from "./Loading";
+import SigninError from "./SigninError";
 
 const Signin = () => {
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const params = getUrlParams();
-  const { state } = storage.loadUser();
+  const user = storage.loadUser();
 
-  // Setup user and action
+  // Setup user data and action
   useEffect(() => {
+    // Clear user state if authentication or fetching user data fails
+    const setErrorAndClearUser = () => {
+      setError(true);
+      storage.clearUser();
+      dispatch(clearUser());
+    };
+
     const setupUserData = async ({
       access_token,
       token_type,
@@ -28,7 +37,7 @@ const Signin = () => {
           username: userData.name,
           accessToken: access_token,
           tokenType: token_type,
-          tokenExpiry: Date.now() + expires_in * 1000, // may need to set this when sending initial request
+          tokenExpiry: Date.now() + expires_in * 1000,
         };
         dispatch(setUser(user));
         storage.saveUser(user);
@@ -36,22 +45,23 @@ const Signin = () => {
         history.push("/");
       } catch (err) {
         console.error(err);
+        setErrorAndClearUser();
       }
     };
 
-    if (!params.error && params.state === state) {
+    if (params && !params.error && user && params.state === user.state) {
       setupUserData(params);
+    } else {
+      setErrorAndClearUser();
     }
-  }, [state, params, dispatch, history]);
+  }, [user, params, dispatch, history]);
 
-  if (params.error) {
-    return <h1>{params.error}</h1>;
-  }
-  if (params.state !== state) {
-    return <h1>state mismatch</h1>;
+  // If no URL parameters, redirect was not from Reddit. Redirect to home page
+  if (!params) {
+    history.push("/");
   }
 
-  return <Loading />;
+  return error ? <SigninError /> : <Loading message="Authenticating User..." />;
 };
 
 export default Signin;

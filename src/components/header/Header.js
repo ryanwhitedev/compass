@@ -23,7 +23,7 @@ const Header = () => {
     }
   });
 
-  return !user ? (
+  return !(user && user.username) ? (
     <LoginHeader />
   ) : isMobile ? (
     <MobileHeader />

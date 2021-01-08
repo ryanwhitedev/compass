@@ -26,12 +26,12 @@ const App = () => {
 
   return (
     <Router>
+      <Header />
       <Switch>
         <Route path="/signin">
           <Signin />
         </Route>
         <Route path="/">
-          <Header />
           <Main />
         </Route>
       </Switch>
