@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { authenticateUserWithAction } from "../services/auth";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
+import GetStarted from "./GetStarted";
 import Loading from "./Loading";
 import Card from "./Card";
-import { useDispatch, useSelector } from "react-redux";
 import { setAction, clearAction, setPosts } from "../utils/actionCreators";
 
 const POST_INTERVAL = 10;
@@ -55,11 +55,11 @@ const Main = () => {
   }, [posts]);
 
   if (!user || !user.isAuthenticated) {
-    return null;
+    return <GetStarted />;
   }
 
   if (action === "loading") {
-    return <Loading message="Loading Posts..." />;
+    return <Loading message="Loading Posts. This may take a few seconds..." />;
   }
 
   return (
