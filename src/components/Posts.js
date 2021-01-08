@@ -2,23 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
-import GetStarted from "./GetStarted";
 import Loading from "./Loading";
 import Card from "./Card";
 import { setAction, clearAction, setPosts } from "../utils/actionCreators";
 
 const POST_INTERVAL = 10;
 
-const Main = () => {
+const Posts = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const action = useSelector((state) => state.action);
-  const posts = useSelector((state) => {
-    if (state.search) {
-      return state.search.results;
-    }
-    return state.posts;
-  });
+  const posts = useSelector((state) =>
+    state.search ? state.search.results : state.posts
+  );
   const [displayedPosts, setDisplayedPosts] = useState(
     posts.slice(0, POST_INTERVAL)
   );
@@ -54,10 +50,6 @@ const Main = () => {
     setDisplayedPosts(posts.slice(0, POST_INTERVAL));
   }, [posts]);
 
-  if (!user || !user.isAuthenticated) {
-    return <GetStarted />;
-  }
-
   if (action === "loading") {
     return <Loading message="Loading Posts. This may take a few seconds..." />;
   }
@@ -66,7 +58,12 @@ const Main = () => {
     <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
       {displayedPosts.length ? (
         <>
-          <h1 className="text-4xl font-extrabold">Saved Posts</h1>
+          <div className="xs:flex justify-between items-center">
+            <h1 className="text-4xl font-extrabold flex-grow">Saved Posts</h1>
+            <span>{`Found ${posts.length} ${
+              posts.length === 1 ? "post" : "posts"
+            }`}</span>
+          </div>
           {displayedPosts.map((post) => (
             <Card key={post.id} post={post} />
           ))}
@@ -86,4 +83,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Posts;
