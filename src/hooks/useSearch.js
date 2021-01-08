@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import lunr from "lunr";
 import { setIndex } from "../utils/actionCreators";
@@ -55,7 +55,10 @@ const useSearch = () => {
     dispatch(setIndex(buildIndex(posts)));
   }, [posts, dispatch]);
 
-  return (searchStr) => search(searchStr, index, posts);
+  return useCallback((searchStr) => search(searchStr, index, posts), [
+    index,
+    posts,
+  ]);
 };
 
 export default useSearch;

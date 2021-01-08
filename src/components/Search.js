@@ -21,7 +21,7 @@ const Search = () => {
       setQuery("");
       dispatch(clearSearch());
     }
-  }, [location, dispatch]);
+  }, [location, dispatch, search]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
