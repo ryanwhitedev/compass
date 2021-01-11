@@ -1,8 +1,8 @@
 import React from "react";
 
 const Card = ({ post }) => (
-  <div className="flex flex-wrap sm:flex-nowrap my-4 p-4 border-solid border border-gray-100 rounded-md shadow">
-    {post.thumbnail && post.thumbnail !== "self" ? (
+  <div className="flex flex-wrap bg-white sm:flex-nowrap my-4 p-4 border-solid border border-gray-100 rounded-md shadow">
+    {post.thumbnail && post.thumbnail.includes("https") ? (
       <div className="flex-fw sm:flex-initial sm:flex-shrink-0 sm:mr-4 mb-4 sm:mb-0">
         <img className="mx-auto" src={post.thumbnail} alt="preview thumbnail" />
       </div>
@@ -16,10 +16,10 @@ const Card = ({ post }) => (
         }`}
         dangerouslySetInnerHTML={{ __html: post.title }}
       ></h2>
-      <span className="block text-sm font-bold mb-2">{post.subreddit}</span>
+      <span className="block text-sm font-bold mb-2">{`r/${post.subreddit}`}</span>
       {post.content ? (
         <div
-          className="mb-4"
+          className="markdown-wrapper mb-4"
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></div>
       ) : null}

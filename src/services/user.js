@@ -92,7 +92,7 @@ const parseSavedPosts = (posts) => {
       }),
       content: sanitize(marked(content), { USE_PROFILES: { html: true } }),
       id: post.data.name,
-      subreddit: post.data.subreddit_name_prefixed,
+      subreddit: post.data.subreddit,
       permalink: post.data.permalink,
       url: type === "link" ? post.data.url : null,
       thumbnail: type === "link" ? post.data.thumbnail : null,
