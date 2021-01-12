@@ -61,6 +61,12 @@ code {
   top: 7px;
   transform: rotate(-45deg);
 }
+.compass-logo {
+  fill: transparent;
+  stroke-width: 6px;
+  transform-origin: 50% 50%;
+  transform: rotate(35deg);
+}
 
 /* Spinner */
 .circle-loading {
