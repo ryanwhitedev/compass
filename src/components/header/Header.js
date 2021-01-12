@@ -4,7 +4,7 @@ import MobileHeader from "./MobileHeader";
 import DesktopHeader from "./DesktopHeader";
 import { useSelector } from "react-redux";
 
-const MOBILE_BREAKPOINT = 640;
+const MOBILE_BREAKPOINT = 768;
 const isMobileBreakpoint = () => window.innerWidth < MOBILE_BREAKPOINT;
 
 const Header = () => {
@@ -14,7 +14,6 @@ const Header = () => {
   useLayoutEffect(() => {
     if (user) {
       const changeHeader = () => {
-        console.log("checking width..");
         setIsMobile(isMobileBreakpoint() ? true : false);
       };
 

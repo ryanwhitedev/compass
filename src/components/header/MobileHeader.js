@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import CompassLogo from "./CompassLogo";
 import Menu from "../Menu";
 import Search from "../Search";
 
@@ -9,15 +10,19 @@ const MobileHeader = () => {
 
   return (
     <header
-      className={`header py-2 px-4 bg-gray-100 ${menuVisible ? "open" : null}`}
+      className={`header sticky top-0 shadow py-2 px-4 bg-white ${
+        menuVisible ? "open" : ""
+      }`}
     >
       <div
-        className={`grid grid-cols-2 gap-2 xs:gap-x-6 xs:grid-cols-mobileNav justify-between items-center ${
-          menuVisible ? null : "xs:grid-flow-col"
+        className={`grid grid-cols-2 gap-2 xs:gap-6 justify-between items-center ${
+          menuVisible ? null : "xs:grid-cols-auto-fr-auto xs:grid-flow-col"
         }`}
       >
         <div className="text-xl sm:text-2xl font-black">
-          <Link to="/">SS4R</Link>
+          <Link to="/">
+            <CompassLogo />
+          </Link>
         </div>
         <button
           className="justify-self-end mobile-nav-toggle focus:outline-none"

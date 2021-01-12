@@ -21,14 +21,17 @@ module.exports = {
         fw: "0 0 100%",
       },
       gridTemplateColumns: {
-        mobileNav: "auto 1fr auto",
+        "auto-fr-auto": "auto 1fr auto",
+      },
+      maxWidth: {
+        "500px": "500px",
+      },
+      minWidth: {
+        menu: "155px",
       },
     },
-    minWidth: {
-      menu: "140px",
-    },
     screens: {
-      xs: "440px",
+      xs: "520px",
       sm: "640px",
       md: "768px",
       lg: "1024px",

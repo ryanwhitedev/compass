@@ -37,7 +37,10 @@ const Search = () => {
   };
 
   return (
-    <form className="flex sm:justify-self-end" onSubmit={handleSubmit}>
+    <form
+      className="justify-self-center flex items-center w-full max-w-500px"
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         className="flex-grow py-1 px-1.5 mr-2 border border-gray-300 rounded"
