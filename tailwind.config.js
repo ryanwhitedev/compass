@@ -6,6 +6,9 @@ module.exports = {
       animation: {
         "spin-slow": "spin 2s linear infinite",
       },
+      backgroundImage: {
+        contour: "url(./bgContourLines.svg)",
+      },
       colors: {
         current: "currentColor",
         orange: {
@@ -20,6 +23,9 @@ module.exports = {
       gridTemplateColumns: {
         mobileNav: "auto 1fr auto",
       },
+    },
+    minWidth: {
+      menu: "140px",
     },
     screens: {
       xs: "440px",
