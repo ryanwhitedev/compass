@@ -71,10 +71,9 @@ code {
 /* Spinner */
 .circle-loading {
   fill: transparent;
-  stroke: #2f3d4c;
   stroke-dasharray: 283;
   stroke-linecap: round;
-  stroke-width: 10;
+  stroke-width: 10px;
   transform-origin: 50% 50%;
   animation: 1.4s ease-in-out infinite both circle--loading;
 }
@@ -92,5 +91,52 @@ code {
   100% {
     stroke-dashoffset: 280;
     transform: rotate(360deg);
+  }
+}
+
+/* Markdown */
+.markdown-wrapper > * {
+  margin-bottom: 0.7rem;
+}
+.markdown-wrapper > *:last-child {
+  margin-bottom: 0 !important;
+}
+.markdown-wrapper a {
+  color: #ff4400;
+}
+.markdown-wrapper a:hover {
+  color: #ff6d38;
+}
+.markdown-wrapper a {
+  word-break: break-all;
+}
+.markdown-wrapper pre {
+  background-color: rgba(204, 204, 204, 0.4);
+  max-width: 100%;
+  padding: 0.8rem;
+  overflow-x: auto;
+}
+.markdown-wrapper pre > code {
+  background-color: transparent;
+}
+.markdown-wrapper code {
+  background-color: rgba(204, 204, 204, 0.4);
+}
+.markdown-wrapper ul {
+  list-style: disc outside none;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.markdown-wrapper ol {
+  list-style: decimal outside none;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.markdown-wrapper li {
+  break-word: break-all;
+}
+@media all and (min-width: 640px) {
+  .markdown-wrapper > * {
+    margin-bottom: 1rem;
   }
 }

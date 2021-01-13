@@ -2,18 +2,6 @@ import { sanitize } from "dompurify";
 import marked from "marked";
 import storage from "../utils/storage";
 
-// Override default parser output
-const renderer = {
-  code(code, infostring, escaped) {
-    return `<pre><code>${code}</code></pre>`;
-  },
-  codespan(code) {
-    const codeStr = code.replace(/&amp;/g, "&");
-    return `<code>${codeStr}</code>`;
-  },
-};
-marked.use({ renderer });
-
 export const getUserData = async (token, tokenType = "bearer") => {
   const endpoint = "https://oauth.reddit.com/api/v1/me?raw_json=1";
   const response = await fetch(endpoint, {
@@ -76,7 +64,6 @@ export const getNewPosts = async (user) => {
 
   do {
     const response = await getSavedPosts({ user, before: beforePostId });
-    console.log(response);
     const newPosts = parseSavedPosts(response.data.children);
     allPosts = newPosts.concat(allPosts);
     beforePostId = allPosts[0].id;
@@ -87,6 +74,18 @@ export const getNewPosts = async (user) => {
 };
 
 const parseSavedPosts = (posts) => {
+  // Override default parser output
+  const renderer = {
+    code(code) {
+      return `<pre><code>${code}</code></pre>`;
+    },
+    codespan(code) {
+      const codeStr = code.replace(/&amp;/g, "&");
+      return `<code>${codeStr}</code>`;
+    },
+  };
+  marked.use({ renderer });
+
   return posts.map((post) => {
     const type = post.kind === "t1" ? "comment" : "link";
     const title = type === "link" ? post.data.title : post.data.link_title;
