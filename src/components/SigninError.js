@@ -18,7 +18,11 @@ const SigninError = () => {
     <div className="md:container md:max-w-screen-xl md:mx-auto px-4 py-8 text-center">
       <h1 className="text-2xl font-bold">User Authentication Failed</h1>
       <p>
-        Click <Link to="/">here</Link> to return to home page or wait {seconds}{" "}
+        Click{" "}
+        <Link to="/" className="text-orange hover:text-orange-light">
+          here
+        </Link>{" "}
+        to return to home page or wait {seconds}{" "}
         {seconds === 1 ? "second" : "seconds"}.
       </p>
     </div>

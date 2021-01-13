@@ -41,7 +41,7 @@ const Menu = ({ toggleVisibility }) => {
       <ul>
         <li>
           <button
-            className="px-4 py-2 w-full hover:bg-gray-300"
+            className="px-4 py-2 w-full hover:bg-gray-100"
             onClick={getNewPosts}
           >
             Load New Posts
@@ -49,7 +49,7 @@ const Menu = ({ toggleVisibility }) => {
         </li>
         <li>
           <button
-            className="px-4 py-2 w-full hover:bg-gray-300"
+            className="px-4 py-2 w-full hover:bg-gray-100"
             onClick={reloadAllPosts}
           >
             Reload All Posts
@@ -57,7 +57,7 @@ const Menu = ({ toggleVisibility }) => {
         </li>
         <li>
           <button
-            className="px-4 py-2 w-full hover:bg-gray-300"
+            className="px-4 py-2 w-full hover:bg-gray-100"
             onClick={logout}
           >
             Logout

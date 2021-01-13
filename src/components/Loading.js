@@ -1,11 +1,11 @@
 import React from "react";
 
 const Loading = ({ message }) => (
-  <div className="flex flex-col justify-center items-center mx-auto my-8">
+  <div className="flex flex-col justify-center items-center mx-auto my-8 px-4">
     {message ? <p className="mb-4">{message}</p> : null}
     <div>
       <svg
-        className="animate-spin-slow h-12 w-12"
+        className="animate-spin-slow h-12 w-12 stroke-current text-black"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
       >
