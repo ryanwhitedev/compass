@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import storage from "../utils/storage";
 import { setAction, clearUser, clearPosts } from "../utils/actionCreators";
-import { authenticateUserWithAction } from "../services/auth";
 
 const Menu = ({ toggleVisibility }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
 
   const logout = () => {
     storage.clearUser();
@@ -15,25 +13,9 @@ const Menu = ({ toggleVisibility }) => {
     dispatch(clearPosts());
   };
 
-  const reloadAllPosts = async () => {
-    if (user && user.tokenExpiry > Date.now()) {
-      dispatch(setAction("getAllPosts"));
-    } else {
-      storage.clearPosts();
-      storage.clearUser();
-      authenticateUserWithAction("getAllPosts");
-    }
-
+  const loadPosts = (postType) => {
+    dispatch(setAction(postType));
     toggleVisibility();
-  };
-
-  const getNewPosts = async () => {
-    if (user && user.tokenExpiry > Date.now()) {
-      dispatch(setAction("getNewPosts"));
-    } else {
-      storage.clearUser();
-      authenticateUserWithAction("getNewPosts");
-    }
   };
 
   return (
@@ -42,7 +24,7 @@ const Menu = ({ toggleVisibility }) => {
         <li>
           <button
             className="px-4 py-2 w-full hover:bg-gray-100"
-            onClick={getNewPosts}
+            onClick={() => loadPosts("getNewPosts")}
           >
             Load New Posts
           </button>
@@ -50,7 +32,7 @@ const Menu = ({ toggleVisibility }) => {
         <li>
           <button
             className="px-4 py-2 w-full hover:bg-gray-100"
-            onClick={reloadAllPosts}
+            onClick={() => loadPosts("getAllPosts")}
           >
             Reload All Posts
           </button>

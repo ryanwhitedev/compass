@@ -2,6 +2,9 @@ import storage from "../utils/storage";
 import { authConfig } from "../utils/config";
 import { generateToken } from "../utils/common";
 
+export const isUserAuthenticated = ({ tokenExpiry }) =>
+  tokenExpiry > Date.now();
+
 // `state` is returned with the authentication response. `action` is used to determine which
 // action to complete following successful authentication
 export const authenticateUserWithAction = (action) => {

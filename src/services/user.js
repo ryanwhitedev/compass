@@ -1,6 +1,7 @@
 import { sanitize } from "dompurify";
 import marked from "marked";
 import storage from "../utils/storage";
+import { isUserAuthenticated, authenticateUserWithAction } from "./auth";
 
 export const getUserData = async (token, tokenType = "bearer") => {
   const endpoint = "https://oauth.reddit.com/api/v1/me?raw_json=1";
@@ -40,6 +41,12 @@ const getSavedPosts = async ({
 };
 
 export const getAllPosts = async (user) => {
+  if (!isUserAuthenticated(user)) {
+    storage.clearPosts();
+    storage.clearUser();
+    return authenticateUserWithAction("getAllPosts");
+  }
+
   const savedPosts = [];
   let afterPostId = null;
 
@@ -58,6 +65,11 @@ export const getAllPosts = async (user) => {
 };
 
 export const getNewPosts = async (user) => {
+  if (!isUserAuthenticated(user)) {
+    storage.clearUser();
+    return authenticateUserWithAction("getNewPosts");
+  }
+
   let allPosts = storage.loadPosts();
   let beforePostId = allPosts[0].id;
   let postDist;
