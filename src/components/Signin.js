@@ -4,7 +4,12 @@ import { useHistory } from "react-router-dom";
 import storage from "../utils/storage";
 import { getUrlParams, parseStateToken } from "../utils/common";
 import { getUserData } from "../services/user";
-import { setUser, setAction, clearUser } from "../utils/actionCreators";
+import {
+  setUser,
+  setAction,
+  clearUser,
+  clearPosts,
+} from "../utils/actionCreators";
 import Loading from "./Loading";
 import SigninError from "./SigninError";
 
@@ -18,10 +23,12 @@ const Signin = () => {
   // Setup user data and action
   useEffect(() => {
     // Clear user state if authentication or fetching user data fails
-    const setErrorAndClearUser = () => {
+    const setErrorAndClearUserData = () => {
       setError(true);
       storage.clearUser();
       dispatch(clearUser());
+      storage.clearPosts();
+      dispatch(clearPosts());
     };
 
     const setupUserData = async ({
@@ -45,14 +52,14 @@ const Signin = () => {
         history.push("/");
       } catch (err) {
         console.error(err);
-        setErrorAndClearUser();
+        setErrorAndClearUserData();
       }
     };
 
     if (params && !params.error && user && params.state === user.state) {
       setupUserData(params);
     } else {
-      setErrorAndClearUser();
+      setErrorAndClearUserData();
     }
   }, [user, params, dispatch, history]);
 
