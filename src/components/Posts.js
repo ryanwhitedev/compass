@@ -19,8 +19,6 @@ const Posts = () => {
     posts.slice(0, POST_INTERVAL)
   );
 
-  console.log("main:", posts);
-
   const showMorePosts = () => {
     const numPosts = displayedPosts.length + POST_INTERVAL;
     const postsToDisplay = posts.slice(0, numPosts);
@@ -35,17 +33,16 @@ const Posts = () => {
       storage.savePosts(posts);
     };
 
-    if (user && action === "getAllPosts") {
+    if (action === "getAllPosts") {
       dispatch(setAction("loading"));
       getAndSetPosts(getAllPosts);
-    } else if (user && action === "getNewPosts") {
+    } else if (action === "getNewPosts") {
       dispatch(setAction("loading"));
       getAndSetPosts(getNewPosts);
-    } else if (user && posts.length) {
-      setDisplayedPosts(posts.slice(0, POST_INTERVAL));
     }
   }, [user, action, posts, dispatch]);
 
+  // Updates displayed posts (ie in response to a search)
   useEffect(() => {
     setDisplayedPosts(posts.slice(0, POST_INTERVAL));
   }, [posts]);
