@@ -23,6 +23,9 @@ module.exports = {
       gridTemplateColumns: {
         "auto-fr-auto": "auto 1fr auto",
       },
+      inset: {
+        initial: "initial",
+      },
       maxWidth: {
         "500px": "500px",
       },
