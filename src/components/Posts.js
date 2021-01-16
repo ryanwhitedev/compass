@@ -3,8 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
 import Loading from "./Loading";
+import Notification from "./Notification";
 import Card from "./Card";
-import { setAction, clearAction, setPosts } from "../utils/actionCreators";
+import {
+  setAction,
+  clearAction,
+  setPosts,
+  setNotification,
+} from "../utils/actionCreators";
 
 const POST_INTERVAL = 10;
 
@@ -27,10 +33,27 @@ const Posts = () => {
 
   useEffect(() => {
     const getAndSetPosts = async (fetchPosts) => {
-      const posts = await fetchPosts(user);
-      dispatch(clearAction());
-      dispatch(setPosts(posts));
-      storage.savePosts(posts);
+      let notification;
+      try {
+        const posts = await fetchPosts(user);
+        dispatch(setPosts(posts));
+        storage.savePosts(posts);
+
+        notification = {
+          type: "success",
+          message: "Posts loaded successfully.",
+        };
+      } catch (err) {
+        console.error(err);
+
+        notification = {
+          type: "error",
+          message: "Failed to load posts.",
+        };
+      }
+
+      dispatch(setNotification(notification));
+      dispatch(clearAction()); // clear loading action
     };
 
     if (action === "getAllPosts") {
@@ -53,6 +76,7 @@ const Posts = () => {
 
   return (
     <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
+      <Notification />
       {displayedPosts.length ? (
         <>
           <div className="xs:flex justify-between items-center">
