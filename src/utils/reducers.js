@@ -53,11 +53,23 @@ const searchReducer = (state = null, action) => {
   }
 };
 
+const notificationReducer = (state = null, action) => {
+  switch (action.type) {
+    case "SET_NOTIFICATION":
+      return action.data.notification;
+    case "CLEAR_NOTIFICATION":
+      return null;
+    default:
+      return state;
+  }
+};
+
 const reducers = {
   userReducer,
   actionReducer,
   postReducer,
   indexReducer,
   searchReducer,
+  notificationReducer,
 };
 export default reducers;

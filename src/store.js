@@ -1,5 +1,6 @@
-import { createStore, combineReducers } from "redux";
+import { applyMiddleware, createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 import reducers from "./utils/reducers";
 
 const storeReducers = combineReducers({
@@ -8,8 +9,12 @@ const storeReducers = combineReducers({
   posts: reducers.postReducer,
   index: reducers.indexReducer,
   search: reducers.searchReducer,
+  notification: reducers.notificationReducer,
 });
 
-const store = createStore(storeReducers, composeWithDevTools());
+const store = createStore(
+  storeReducers,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

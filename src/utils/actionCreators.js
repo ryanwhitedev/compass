@@ -32,3 +32,23 @@ export const setSearch = (search) => ({
 });
 
 export const clearSearch = () => ({ type: "CLEAR_SEARCH" });
+
+let timeoutId;
+const NOTIFICATION_DURATION = 3000;
+export const setNotification = (notification) => async (dispatch) => {
+  // clear timeout to ensure notification is shown for full duration
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(
+    () => dispatch(clearNotification()),
+    NOTIFICATION_DURATION
+  );
+
+  dispatch({
+    type: "SET_NOTIFICATION",
+    data: { notification },
+  });
+};
+
+export const clearNotification = (notification) => ({
+  type: "CLEAR_NOTIFICATION",
+});
