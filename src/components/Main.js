@@ -2,34 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
-import Loading from "./Loading";
-import Card from "./Card";
 import {
   setAction,
   clearAction,
   setPosts,
   setNotification,
 } from "../utils/actionCreators";
+import Loading from "./Loading";
+import PostContainer from "./PostContainer";
 
-const POST_INTERVAL = 10;
+const ADD_NUM_POSTS = 10;
 
-const Posts = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+const Main = ({ user }) => {
   const action = useSelector((state) => state.action);
   const posts = useSelector((state) =>
     state.search ? state.search.results : state.posts
   );
   const [displayedPosts, setDisplayedPosts] = useState(
-    posts.slice(0, POST_INTERVAL)
+    posts.slice(0, ADD_NUM_POSTS)
   );
 
-  const showMorePosts = () => {
-    const numPosts = displayedPosts.length + POST_INTERVAL;
-    const postsToDisplay = posts.slice(0, numPosts);
-    setDisplayedPosts(postsToDisplay);
-  };
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const getAndSetPosts = async (fetchPosts) => {
       let notification;
@@ -66,8 +59,14 @@ const Posts = () => {
 
   // Updates displayed posts (ie in response to a search)
   useEffect(() => {
-    setDisplayedPosts(posts.slice(0, POST_INTERVAL));
+    setDisplayedPosts(posts.slice(0, ADD_NUM_POSTS));
   }, [posts]);
+
+  const loadMorePosts = () => {
+    const numPosts = displayedPosts.length + ADD_NUM_POSTS;
+    const postsToDisplay = posts.slice(0, numPosts);
+    setDisplayedPosts(postsToDisplay);
+  };
 
   if (action === "loading") {
     return <Loading message="Loading Posts. This may take a few seconds..." />;
@@ -75,33 +74,19 @@ const Posts = () => {
 
   return (
     <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
-      {displayedPosts.length ? (
-        <>
-          <div className="xs:flex justify-between items-center">
-            <h1 className="text-4xl font-extrabold flex-grow">Saved Posts</h1>
-            <span>{`Found ${posts.length} ${
-              posts.length === 1 ? "post" : "posts"
-            }`}</span>
-          </div>
-          <div className="postContainer">
-            {displayedPosts.map((post) => (
-              <Card key={post.id} post={post} />
-            ))}
-          </div>
-          {displayedPosts.length < posts.length ? (
-            <button
-              className="block py-2 px-4 bg-orange hover:bg-orange-light text-white font-bold rounded mx-auto"
-              onClick={showMorePosts}
-            >
-              Load More
-            </button>
-          ) : null}
-        </>
-      ) : (
-        <p>No saved posts!</p>
-      )}
+      <div className="xs:flex justify-between items-center">
+        <h1 className="text-4xl font-extrabold flex-grow">Saved Posts</h1>
+        <span>{`Found ${posts.length} ${
+          posts.length === 1 ? "post" : "posts"
+        }`}</span>
+      </div>
+      <PostContainer
+        posts={displayedPosts}
+        morePosts={displayedPosts.length < posts.length}
+        loadMorePosts={loadMorePosts}
+      />
     </div>
   );
 };
 
-export default Posts;
+export default Main;

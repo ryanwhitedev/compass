@@ -1,39 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation, useHistory } from "react-router-dom";
-import useSearch from "../hooks/useSearch";
-import { setSearch, clearSearch } from "../utils/actionCreators";
+import { useLocation } from "react-router-dom";
 
-const Search = () => {
-  const dispatch = useDispatch();
+const SearchForm = ({ searchPosts }) => {
   const location = useLocation();
-  const history = useHistory();
-  const search = useSearch();
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (location.search) {
       const queryStr = decodeURIComponent(location.search.replace("?s=", ""));
       setQuery(queryStr);
-      const results = search(queryStr);
-      dispatch(setSearch({ query: queryStr, results }));
+      searchPosts(queryStr);
     } else {
-      setQuery("");
-      dispatch(clearSearch());
+      searchPosts("");
     }
-  }, [location, dispatch, search]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const results = search(query);
-    if (!query) {
-      dispatch(clearSearch());
-      history.push("/");
-    } else {
-      dispatch(setSearch({ query, results }));
-      history.push(`?s=${encodeURIComponent(query)}`);
-    }
+    searchPosts(query);
   };
 
   return (
@@ -57,4 +42,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchForm;

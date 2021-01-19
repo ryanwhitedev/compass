@@ -5,10 +5,10 @@ import "./App.css";
 import storage from "./utils/storage";
 import Signin from "./components/Signin";
 import Header from "./components/header/Header";
-import Posts from "./components/Posts";
-import Notification from "./components/Notification";
+import Main from "./components/Main";
 import { setUser, setPosts } from "./utils/actionCreators";
 import Landing from "./components/Landing";
+import Notification from "./components/Notification";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,11 @@ const App = () => {
             <Signin />
           </Route>
           <Route path="/">
-            {!user || !user.isAuthenticated ? <Landing /> : <Posts />}
+            {!user || !user.isAuthenticated ? (
+              <Landing />
+            ) : (
+              <Main user={user} />
+            )}
           </Route>
         </Switch>
         <Notification />

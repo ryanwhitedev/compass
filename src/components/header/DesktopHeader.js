@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
-import Menu from "../Menu";
-import Search from "../Search";
+import Menu from "./Menu";
+import SearchForm from "./SearchForm";
 
-const DesktopHeader = ({ username }) => {
+const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
   const [visible, setVisible] = useState(false);
 
   const toggleVisibility = useCallback(() => setVisible(!visible), [visible]);
@@ -29,7 +29,7 @@ const DesktopHeader = ({ username }) => {
             <CompassLogo />
           </Link>
         </div>
-        <Search />
+        <SearchForm searchPosts={searchPosts} />
         <div ref={navRef} className="flex items-center relative ml-auto">
           <button
             className="flex justify-center items-center py-1 px-4 border border-gray-100 rounded hover:border-gray-300 focus:outline-none min-w-menu"
@@ -51,7 +51,7 @@ const DesktopHeader = ({ username }) => {
                 : "hidden"
             }`}
           >
-            <Menu toggleVisibility={toggleVisibility} />
+            <Menu loadPosts={loadPosts(toggleVisibility)} logout={logout} />
           </div>
         </div>
       </div>
