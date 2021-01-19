@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ post }) => (
+const Post = ({ post }) => (
   <div className="flex flex-wrap bg-white text-black sm:flex-nowrap my-4 p-4 border-solid border border-gray-100 rounded-md shadow">
     {post.thumbnail && post.thumbnail.includes("https") ? (
       <div className="flex-fw sm:flex-initial sm:flex-shrink-0 sm:mr-4 mb-4 sm:mb-0">
@@ -53,4 +53,4 @@ const Card = ({ post }) => (
   </div>
 );
 
-export default Card;
+export default Post;

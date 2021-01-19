@@ -5,7 +5,7 @@ import "./App.css";
 import storage from "./utils/storage";
 import Signin from "./components/Signin";
 import Header from "./components/header/Header";
-import Posts from "./components/Posts";
+import Main from "./components/Main";
 import { useDispatch } from "react-redux";
 import { setUser, setPosts } from "./utils/actionCreators";
 import Landing from "./components/Landing";
@@ -36,7 +36,11 @@ const App = () => {
             <Signin />
           </Route>
           <Route path="/">
-            {!user || !user.isAuthenticated ? <Landing /> : <Posts />}
+            {!user || !user.isAuthenticated ? (
+              <Landing />
+            ) : (
+              <Main user={user} />
+            )}
           </Route>
         </Switch>
       </div>
