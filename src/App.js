@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import storage from "./utils/storage";
 import Signin from "./components/Signin";
 import Header from "./components/header/Header";
 import Posts from "./components/Posts";
-import { useDispatch } from "react-redux";
+import Notification from "./components/Notification";
 import { setUser, setPosts } from "./utils/actionCreators";
 import Landing from "./components/Landing";
 
@@ -39,6 +39,7 @@ const App = () => {
             {!user || !user.isAuthenticated ? <Landing /> : <Posts />}
           </Route>
         </Switch>
+        <Notification />
       </div>
     </Router>
   );
