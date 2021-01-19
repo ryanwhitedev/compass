@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts, getNewPosts } from "../services/user";
 import storage from "../utils/storage";
 import Loading from "./Loading";
-import Notification from "./Notification";
 import Card from "./Card";
 import {
   setAction,
@@ -76,7 +75,6 @@ const Posts = () => {
 
   return (
     <div className="md:container md:max-w-screen-xl md:mx-auto p-4">
-      <Notification />
       {displayedPosts.length ? (
         <>
           <div className="xs:flex justify-between items-center">
@@ -85,9 +83,11 @@ const Posts = () => {
               posts.length === 1 ? "post" : "posts"
             }`}</span>
           </div>
-          {displayedPosts.map((post) => (
-            <Card key={post.id} post={post} />
-          ))}
+          <div className="postContainer">
+            {displayedPosts.map((post) => (
+              <Card key={post.id} post={post} />
+            ))}
+          </div>
           {displayedPosts.length < posts.length ? (
             <button
               className="block py-2 px-4 bg-orange hover:bg-orange-light text-white font-bold rounded mx-auto"
