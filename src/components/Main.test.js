@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, screen } from "../testUtils";
-import Posts from "./Posts";
+import Main from "./Main";
 
 const mockPosts = [
   { type: "comment", title: "Test comment 1", id: "tc__1" },
@@ -22,25 +22,25 @@ const mockSearchResults = [
   { type: "comment", title: "Test comment 2", id: "tc__2" },
 ];
 
-describe("<Posts />", () => {
+describe("<Main />", () => {
   test("no posts rendered if posts is empty", () => {
-    render(<Posts />, { initialState: { posts: [] } });
-    expect(screen.getByText("No saved posts!")).toBeInTheDocument();
+    render(<Main />, { initialState: { posts: [] } });
+    expect(screen.getByText("No posts found.")).toBeInTheDocument();
   });
 
   test("renders posts", () => {
-    render(<Posts />, { initialState: { posts: mockPosts } });
+    render(<Main />, { initialState: { posts: mockPosts } });
     expect(screen.getByText("Test comment 1")).toBeInTheDocument();
   });
 
   test("renders first 10 posts if more than 10 exist", () => {
-    const posts = render(<Posts />, { initialState: { posts: mockPosts } });
+    const posts = render(<Main />, { initialState: { posts: mockPosts } });
     const postContainer = posts.container.querySelector(".postContainer");
     expect(postContainer.children).toHaveLength(10);
   });
 
   test("click button to render more posts", () => {
-    const posts = render(<Posts />, { initialState: { posts: mockPosts } });
+    const posts = render(<Main />, { initialState: { posts: mockPosts } });
     const postContainer = posts.container.querySelector(".postContainer");
     expect(postContainer.children).toHaveLength(10);
 
@@ -51,18 +51,18 @@ describe("<Posts />", () => {
 
   describe("search query is set", () => {
     test("no posts rendered if results list is empty", () => {
-      render(<Posts />, {
+      render(<Main />, {
         initialState: {
           posts: mockPosts,
           search: { query: "", results: [] },
         },
       });
 
-      expect(screen.getByText("No saved posts!")).toBeInTheDocument();
+      expect(screen.getByText("No posts found.")).toBeInTheDocument();
     });
 
     test("renders search results", () => {
-      const posts = render(<Posts />, {
+      const posts = render(<Main />, {
         initialState: {
           posts: mockPosts,
           search: { query: "", results: mockSearchResults },
