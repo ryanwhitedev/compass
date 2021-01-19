@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
-import Menu from "../Menu";
-import Search from "../Search";
+import Menu from "./Menu";
+import SearchForm from "./SearchForm";
 
-const MobileHeader = () => {
+const MobileHeader = ({ searchPosts, loadPosts, logout }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleVisibility = () => setMenuVisible(!menuVisible);
 
@@ -34,11 +34,11 @@ const MobileHeader = () => {
         </button>
         {menuVisible ? (
           <div className="col-span-2 xs:col-span-full">
-            <Menu toggleVisibility={toggleVisibility} />
+            <Menu loadPosts={loadPosts(toggleVisibility)} logout={logout} />
           </div>
         ) : (
           <div className="col-span-2 xs:col-start-2 justify-self-center w-full">
-            <Search />
+            <SearchForm searchPosts={searchPosts} />
           </div>
         )}
       </div>
