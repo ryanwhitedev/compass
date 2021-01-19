@@ -10,8 +10,6 @@ const SearchForm = ({ searchPosts }) => {
       const queryStr = decodeURIComponent(location.search.replace("?s=", ""));
       setQuery(queryStr);
       searchPosts(queryStr);
-    } else {
-      searchPosts("");
     }
     // eslint-disable-next-line
   }, []);
