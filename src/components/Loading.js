@@ -5,7 +5,7 @@ const Loading = ({ message }) => (
     {message ? <p className="mb-4">{message}</p> : null}
     <div>
       <svg
-        className="animate-spin-slow h-12 w-12 stroke-current text-black"
+        className="animate-spin-slow h-12 w-12 stroke-current text-black dark:text-white"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
       >

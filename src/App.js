@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="fixed inset-0 bg-contour bg-white overflow-y-auto">
+      <div className="fixed inset-0 bg-contour bg-white text-black dark:bg-black dark:text-white overflow-y-auto">
         <Header />
         <Switch>
           <Route path="/signin">
