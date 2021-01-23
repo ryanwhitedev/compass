@@ -23,6 +23,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         "auto-fr-auto": "auto 1fr auto",
+        "auto-fr-auto-auto": "auto 1fr auto auto",
       },
       inset: {
         initial: "initial",
@@ -44,7 +45,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fill: ["hover"],
+    },
   },
   plugins: [],
 };

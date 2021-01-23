@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
 import Menu from "./Menu";
 import SearchForm from "./SearchForm";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
   const [visible, setVisible] = useState(false);
@@ -23,7 +24,7 @@ const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
 
   return (
     <header className="sticky top-0 shadow py-2 bg-white dark:bg-black">
-      <div className="grid grid-cols-auto-fr-auto gap-6 justify-center sm:justify-start md:container md:max-w-screen-xl md:mx-auto px-4">
+      <div className="grid grid-cols-auto-fr-auto-auto gap-6 justify-center sm:justify-start md:container md:max-w-screen-xl md:mx-auto px-4">
         <div className="text-xl sm:text-2xl font-black">
           <Link to="/">
             <CompassLogo />
@@ -56,6 +57,9 @@ const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
           >
             <Menu loadPosts={loadPosts(toggleVisibility)} logout={logout} />
           </div>
+        </div>
+        <div className="flex items-center">
+          <ThemeToggleButton />
         </div>
       </div>
     </header>
