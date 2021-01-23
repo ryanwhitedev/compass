@@ -52,3 +52,13 @@ export const setNotification = (notification) => async (dispatch) => {
 export const clearNotification = (notification) => ({
   type: "CLEAR_NOTIFICATION",
 });
+
+const toggleTheme = (theme) =>
+  document.body.classList.toggle("dark", theme === "dark");
+export const setTheme = (theme) => {
+  toggleTheme(theme);
+  return {
+    type: "SET_THEME",
+    data: { theme },
+  };
+};

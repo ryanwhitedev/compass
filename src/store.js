@@ -10,6 +10,7 @@ const storeReducers = combineReducers({
   index: reducers.indexReducer,
   search: reducers.searchReducer,
   notification: reducers.notificationReducer,
+  theme: reducers.themeReducer,
 });
 
 const store = createStore(
