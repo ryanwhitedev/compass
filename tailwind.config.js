@@ -1,6 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
       animation: {
@@ -11,6 +11,7 @@ module.exports = {
       },
       colors: {
         current: "currentColor",
+        black: "#222222",
         orange: {
           light: "#ff6d38",
           DEFAULT: "#ff4400",
@@ -22,6 +23,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         "auto-fr-auto": "auto 1fr auto",
+        "auto-fr-auto-auto": "auto 1fr auto auto",
       },
       inset: {
         initial: "initial",
@@ -43,7 +45,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fill: ["hover"],
+    },
   },
   plugins: [],
 };

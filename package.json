@@ -1,6 +1,6 @@
 {
-  "name": "ss4r_dev",
-  "version": "0.1.0",
+  "name": "compass",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.0.0",

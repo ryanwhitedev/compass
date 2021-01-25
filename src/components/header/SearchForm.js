@@ -26,7 +26,7 @@ const SearchForm = ({ searchPosts }) => {
     >
       <input
         type="text"
-        className="flex-grow py-1 px-1.5 mr-2 border border-gray-300 rounded"
+        className="flex-grow py-1 px-1.5 mr-2 border border-gray-300 dark:border-gray-600 dark:bg-black rounded"
         value={query}
         onChange={({ target }) => setQuery(target.value)}
       />

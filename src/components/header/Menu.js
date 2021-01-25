@@ -5,7 +5,7 @@ const Menu = ({ loadPosts, logout }) => (
     <ul>
       <li>
         <button
-          className="px-4 py-2 w-full hover:bg-gray-100"
+          className="px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-gray-600"
           onClick={() => loadPosts("getNewPosts")}
         >
           Load New Posts
@@ -13,14 +13,17 @@ const Menu = ({ loadPosts, logout }) => (
       </li>
       <li>
         <button
-          className="px-4 py-2 w-full hover:bg-gray-100"
+          className="px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-gray-600"
           onClick={() => loadPosts("getAllPosts")}
         >
           Reload All Posts
         </button>
       </li>
       <li>
-        <button className="px-4 py-2 w-full hover:bg-gray-100" onClick={logout}>
+        <button
+          className="px-4 py-2 w-full hover:bg-gray-100 dark:hover:bg-gray-600"
+          onClick={logout}
+        >
           Logout
         </button>
       </li>

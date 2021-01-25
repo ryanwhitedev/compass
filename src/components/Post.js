@@ -1,7 +1,7 @@
 import React from "react";
 
 const Post = ({ post }) => (
-  <div className="flex flex-wrap bg-white text-black sm:flex-nowrap my-4 p-4 border-solid border border-gray-100 rounded-md shadow">
+  <div className="flex flex-wrap bg-white dark:bg-black text-black dark:text-white sm:flex-nowrap my-4 p-4 border-solid border border-gray-100 dark:border-gray-600 rounded-md shadow">
     {post.thumbnail && post.thumbnail.includes("https") ? (
       <div className="flex-fw sm:flex-initial sm:flex-shrink-0 sm:mr-4 mb-4 sm:mb-0">
         <img className="mx-auto" src={post.thumbnail} alt="preview thumbnail" />

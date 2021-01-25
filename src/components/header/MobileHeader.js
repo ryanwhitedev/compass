@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
 import Menu from "./Menu";
 import SearchForm from "./SearchForm";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const MobileHeader = ({ searchPosts, loadPosts, logout }) => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -10,7 +11,7 @@ const MobileHeader = ({ searchPosts, loadPosts, logout }) => {
 
   return (
     <header
-      className={`header sticky top-0 shadow py-2 px-4 bg-white ${
+      className={`header sticky top-0 shadow py-2 px-4 bg-white dark:bg-black ${
         menuVisible ? "open" : ""
       }`}
     >
@@ -24,14 +25,17 @@ const MobileHeader = ({ searchPosts, loadPosts, logout }) => {
             <CompassLogo />
           </Link>
         </div>
-        <button
-          className="justify-self-end mobile-nav-toggle focus:outline-none"
-          onClick={toggleVisibility}
-        >
-          <div className="bar1"></div>
-          <div className="bar2"></div>
-          <div className="bar3"></div>
-        </button>
+        <div className="flex items-center justify-self-end">
+          <ThemeToggleButton />
+          <button
+            className="ml-4 mobile-nav-toggle focus:outline-none"
+            onClick={toggleVisibility}
+          >
+            <div className="bar1 bg-black dark:bg-white"></div>
+            <div className="bar2 bg-black dark:bg-white"></div>
+            <div className="bar3 bg-black dark:bg-white"></div>
+          </button>
+        </div>
         {menuVisible ? (
           <div className="col-span-2 xs:col-span-full">
             <Menu loadPosts={loadPosts(toggleVisibility)} logout={logout} />

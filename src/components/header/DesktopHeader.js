@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
 import Menu from "./Menu";
 import SearchForm from "./SearchForm";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
   const [visible, setVisible] = useState(false);
@@ -22,8 +23,8 @@ const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
   }, [visible, toggleVisibility]);
 
   return (
-    <header className="sticky top-0 shadow py-2 bg-white">
-      <div className="grid grid-cols-auto-fr-auto gap-6 justify-center sm:justify-start md:container md:max-w-screen-xl md:mx-auto px-4">
+    <header className="sticky top-0 shadow py-2 bg-white dark:bg-black">
+      <div className="grid grid-cols-auto-fr-auto-auto gap-6 justify-center sm:justify-start md:container md:max-w-screen-xl md:mx-auto px-4">
         <div className="text-xl sm:text-2xl font-black">
           <Link to="/">
             <CompassLogo />
@@ -32,7 +33,7 @@ const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
         <SearchForm searchPosts={searchPosts} />
         <div ref={navRef} className="flex items-center relative ml-auto">
           <button
-            className="flex justify-center items-center py-1 px-4 border border-gray-100 rounded hover:border-gray-300 focus:outline-none min-w-menu"
+            className="flex justify-center items-center py-1 px-4 border border-gray-100 dark:border-gray-600 rounded hover:border-gray-300 focus:outline-none min-w-menu"
             onClick={toggleVisibility}
           >
             {`u/${username}`}
@@ -41,18 +42,24 @@ const DesktopHeader = ({ username, searchPosts, loadPosts, logout }) => {
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>
+              <path
+                className="fill-current stroke-current text-black dark:text-white"
+                d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"
+              ></path>
             </svg>
           </button>
           <div
             className={`${
               visible
-                ? "sm:absolute top-full bg-white shadow-lg w-full z-10"
+                ? "sm:absolute top-full bg-white dark:bg-black shadow-lg w-full z-10"
                 : "hidden"
             }`}
           >
             <Menu loadPosts={loadPosts(toggleVisibility)} logout={logout} />
           </div>
+        </div>
+        <div className="flex items-center">
+          <ThemeToggleButton />
         </div>
       </div>
     </header>

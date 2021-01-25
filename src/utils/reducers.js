@@ -64,6 +64,15 @@ const notificationReducer = (state = null, action) => {
   }
 };
 
+const themeReducer = (state = "light", action) => {
+  switch (action.type) {
+    case "SET_THEME":
+      return action.data.theme;
+    default:
+      return state;
+  }
+};
+
 const reducers = {
   userReducer,
   actionReducer,
@@ -71,5 +80,6 @@ const reducers = {
   indexReducer,
   searchReducer,
   notificationReducer,
+  themeReducer,
 };
 export default reducers;
