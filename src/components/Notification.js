@@ -8,7 +8,7 @@ const Notification = () => {
     <div
       className={`${
         notification.type === "success" ? "bg-green-100" : "bg-red-100"
-      } fixed bottom-2 inset-x-2 sm:right-initial  py-4 px-6 rounded text-white dark:text-black`}
+      } fixed bottom-2 inset-x-2 sm:right-initial  py-4 px-6 rounded text-black`}
     >
       {notification.message}
     </div>
