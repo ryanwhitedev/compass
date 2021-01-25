@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CompassLogo from "./CompassLogo";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const LoginHeader = ({ login }) => (
   <header className="sticky top-0 py-2 w-full z-10">
@@ -8,12 +9,15 @@ const LoginHeader = ({ login }) => (
       <Link to="/">
         <CompassLogo />
       </Link>
-      <button
-        className="justify-self-end py-1 px-4 bg-orange border border-orange hover:bg-orange-light text-white font-bold rounded max-w-min"
-        onClick={login}
-      >
-        Login
-      </button>
+      <div className="flex justify-end items-center">
+        <button
+          className="mr-4 py-1 px-4 bg-orange border border-orange hover:bg-orange-light text-white font-bold rounded max-w-min"
+          onClick={login}
+        >
+          Login
+        </button>
+        <ThemeToggleButton />
+      </div>
     </div>
   </header>
 );
