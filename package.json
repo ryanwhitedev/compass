@@ -3,10 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.2.0",
-    "@tailwindcss/postcss7-compat": "^2.2.14",
+    "@craco/craco": "6.4.3",
+    "@tailwindcss/postcss7-compat": "2.2.17",
     "autoprefixer": "^9",
-    "dompurify": "^2.3.1",
+    "dompurify": "2.3.4",
     "lunr": "^2.3.9",
     "marked": "^3.0.3",
     "postcss": "^7",
@@ -17,7 +17,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "2.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "web-vitals": "^2.1.0"
   },
