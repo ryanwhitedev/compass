@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import storage from "../utils/storage";
 import { getUrlParams, parseStateToken } from "../utils/common";
 import { getUserData } from "../services/user";
+import { getAccessToken } from "../services/auth";
 import {
   setUser,
   setAction,
@@ -12,6 +13,8 @@ import {
 } from "../utils/actionCreators";
 import Loading from "./Loading";
 import SigninError from "./SigninError";
+
+let tokenCalls = 0;
 
 const Signin = () => {
   const [error, setError] = useState(false);
@@ -46,19 +49,32 @@ const Signin = () => {
           tokenType: token_type,
           tokenExpiry: Date.now() + expires_in * 1000,
         };
-        dispatch(setUser(user));
         storage.saveUser(user);
+        history.replace("/");
+        dispatch(setUser(user));
         dispatch(setAction(parseStateToken(state)));
-        history.push("/");
       } catch (err) {
         console.error(err);
         setErrorAndClearUserData();
       }
     };
 
-    if (params && !params.error && user && params.state === user.state) {
-      setupUserData(params);
-    } else {
+    const setupUser = async (params) =>  {
+      const accessParams = await getAccessToken(params);
+      if (!accessParams.error) {
+        setupUserData({
+          ...accessParams,
+          state: params.state
+        });
+      } else {
+        setErrorAndClearUserData();
+      }
+    }
+
+    if (params && params.code && user && params.state === user.state && tokenCalls < 1) {
+      tokenCalls++;
+      setupUser(params);
+    } else if (params.error && tokenCalls < 1) {
       setErrorAndClearUserData();
     }
   }, [user, params, dispatch, history]);

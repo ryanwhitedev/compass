@@ -1,8 +1,8 @@
 export const getUrlParams = () => {
-  const hash = window.location.hash.slice(1);
-  if (!hash) return null;
+  const search = window.location.search.substring(1);
+  if (!search) return null;
 
-  const params = new URLSearchParams(hash);
+  const params = new URLSearchParams(search);
   return Array.from(params).reduce((acc, param) => {
     const [key, value] = param;
     acc[key] = value;
